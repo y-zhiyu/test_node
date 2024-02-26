@@ -1,27 +1,14 @@
-let http = require("http");
+const http = require('http');
 
-http
-  .createServer(function (req, res) {
-    router(req, res);
-  })
-  .on("error", function (e) {
-    console.log(e);
-  })
-  .listen(3000, "0.0.0.0");
+const hostname = '127.0.0.1';
+const port = 3000;
 
-let ts = new Date().toLocaleString({ timeZone: "Asia/Shanghai" });
-console.debug(ts);
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
 
-function router(req, res) {
-  switch (req.url) {
-  case "/":
-    index(req, res);
-    break;
-  default:
-    res.end("...");
-  }
-}
-
-function index(req, res) {
-  res.end('{"code":200,"msg":"hello world"}');
-}
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
